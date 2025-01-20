@@ -1,0 +1,46 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos</title>
+    <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+<div class="container mx-auto px-4">
+    <div class="flex flex-row py-4 items-center border-b-2">
+        <div class="basis-1/2 text-4xl">
+            <h1>Productos</h1>
+        </div>
+        <form class="basis-1/2 flex justify-center" action="/productos/crear">
+            <!--RECUERDA: por defecto, button es type="submit",
+            para controlar por js el envío usa type="button"-->
+            <button class="btn btn-blue float-right">Crear</button>
+        </form>
+    </div>
+    <div class="flex flex-row border-b-2">
+        <div class="basis-1/5 text-2xl mr4">Código</div>
+        <div class="basis-1/5 text-2xl">Nombre</div>
+        <div class="basis-1/5 text-2xl">Precio</div>
+        <div class="basis-1/5 text-2xl">Fabricante</div>
+        <div class="basis-1/5 text-center text-2xl">Acción</div>
+    </div>
+    <div class="flex flex-row flex-wrap my-0.5"  th:each="producto : ${listaProductos}">
+        <div class="basis-1/5" th:text="${producto.codigo}">Código</div>
+        <div class="basis-1/5" th:text="${producto.nombre}">Nombre</div>
+        <div class="basis-1/5" th:text="${producto.precio}">Precio</div>
+        <div class="basis-1/5" th:text="${producto.id_fabricante}">Nombre</div>
+        <div class="basis-1/5 flex justify-center">
+            <form th:action="@{/productos/__${producto.codigo}__}">
+                <button class="mx-0.5 btn btn-green">Ver Detalle</button>
+            </form>
+            <form  th:action="@{/productos/editar/}+${producto.codigo}">
+                <button class="mx-0.5 btn btn-blue">Editar</button>
+            </form>
+            <form th:action="@{/productos/borrar/__${producto.codigo}__}" method="post">
+                <button class="mx-0.5 btn btn-red">Eliminar</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
